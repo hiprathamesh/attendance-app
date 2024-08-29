@@ -7,10 +7,15 @@ import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.AccountCircle
+import androidx.compose.material.icons.filled.FrontHand
 import androidx.compose.material.icons.filled.Home
+import androidx.compose.material.icons.outlined.AccountCircle
+import androidx.compose.material.icons.outlined.FrontHand
 import androidx.compose.material.icons.outlined.Home
 import androidx.compose.material3.BadgedBox
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Scaffold
@@ -23,6 +28,8 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.royalp.attendance.ui.theme.AttendanceTheme
+import com.royalp.attendance.ui.theme.interFontFamily
+
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -38,13 +45,13 @@ class MainActivity : ComponentActivity() {
                     ),
                     BottomNavigationItem(
                         title = "Profile",
-                        selected = Icons.Filled.Home,
-                        unSelected = Icons.Outlined.Home,
+                        selected = Icons.Filled.FrontHand,
+                        unSelected = Icons.Outlined.FrontHand,
                     ),
                     BottomNavigationItem(
                         title = "Settings",
-                        selected = Icons.Filled.Home,
-                        unSelected = Icons.Outlined.Home,
+                        selected = Icons.Filled.AccountCircle,
+                        unSelected = Icons.Outlined.AccountCircle,
                     )
                 )
                 var selectedItemIndex by rememberSaveable {
@@ -60,7 +67,7 @@ class MainActivity : ComponentActivity() {
                                         selectedItemIndex = index
                                         //navController.navigate(item.title)
                                     },
-                                    label = { Text(text = item.title) },
+                                    label = { Text(text = item.title, fontFamily = interFontFamily) },
                                     icon = {
                                         BadgedBox(
                                             badge = {}
@@ -78,10 +85,7 @@ class MainActivity : ComponentActivity() {
                         }
                     }
                 ){
-                    Text(
-                        text = "Hello World!",
-                        modifier = Modifier.padding(it)
-                    )
+
                 }
             }
         }

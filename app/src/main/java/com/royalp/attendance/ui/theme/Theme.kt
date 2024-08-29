@@ -51,7 +51,7 @@ fun AttendanceTheme(
 
     MaterialTheme(
       colorScheme = colorScheme,
-      typography = Typography,
+      typography = InterTypography,
       content = content
     )
 }

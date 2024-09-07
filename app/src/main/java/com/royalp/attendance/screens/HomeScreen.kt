@@ -7,6 +7,8 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material3.Icon
@@ -26,7 +28,8 @@ import com.royalp.attendance.components.LectureCard
 @Composable
 fun HomeScreen() {
     AttendanceTheme {
-        Column(modifier = Modifier.padding(16.dp)){
+        val scrollStateHS = rememberScrollState()
+        Column(modifier = Modifier.padding(16.dp,40.dp,16.dp,80.dp).verticalScroll(scrollStateHS)){
             Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween, verticalAlignment = Alignment.CenterVertically){
                 Text(text = "Home", fontFamily = interFontFamily, fontWeight = FontWeight.Bold, fontSize = 30.sp)
                 Icon(imageVector = Icons.Filled.MoreVert, contentDescription = "More", modifier = Modifier.height(42.dp))
@@ -35,9 +38,24 @@ fun HomeScreen() {
             Text(text="Good Morning,\nPrathamesh", fontFamily = interFontFamily, fontWeight = FontWeight.Bold, fontSize = 22.sp)
             Spacer(modifier = Modifier.height(16.dp))
             Text(text="Your Classes for Today", fontFamily = interFontFamily, fontWeight = FontWeight.Normal, fontSize = 12.sp)
-            Spacer(modifier = Modifier.height(8.dp))
-            LectureCard()
-
+            Spacer(modifier = Modifier.height(16.dp))
+            LectureCard(0)
+            Spacer(modifier = Modifier.height(16.dp))
+            LectureCard(1)
+            Spacer(modifier = Modifier.height(16.dp))
+            LectureCard(2)
+            Spacer(modifier = Modifier.height(16.dp))
+            LectureCard(2)
+            Spacer(modifier = Modifier.height(32.dp))
+            Text(text="Tomorrow", fontFamily = interFontFamily, fontWeight = FontWeight.Normal, fontSize = 12.sp)
+            Spacer(modifier = Modifier.height(16.dp))
+            LectureCard(0)
+            Spacer(modifier = Modifier.height(16.dp))
+            LectureCard(1)
+            Spacer(modifier = Modifier.height(16.dp))
+            LectureCard(2)
+            Spacer(modifier = Modifier.height(16.dp))
+            LectureCard(2)
         }
     }
 }

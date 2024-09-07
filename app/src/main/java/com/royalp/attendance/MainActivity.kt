@@ -22,9 +22,14 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
 import com.royalp.attendance.ui.theme.AttendanceTheme
 import com.royalp.attendance.ui.theme.interFontFamily
 import com.royalp.attendance.screens.HomeScreen
+import com.royalp.attendance.screens.AttendanceScreen
+import com.royalp.attendance.screens.SettingsScreen
 
 
 class MainActivity : ComponentActivity() {
@@ -34,7 +39,8 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             AttendanceTheme {
-                HomeScreen()
+                val navController = rememberNavController()
+
                 val items = listOf(
                     BottomNavigationItem(
                         title = "Home",
@@ -63,7 +69,7 @@ class MainActivity : ComponentActivity() {
                                     selected = selectedItemIndex == index,
                                     onClick = {
                                         selectedItemIndex = index
-                                        //navController.navigate(item.title)
+                                        navController.navigate(item.title)
                                     },
                                     label = { Text(text = item.title, fontFamily = interFontFamily) },
                                     icon = {
@@ -83,6 +89,17 @@ class MainActivity : ComponentActivity() {
                         }
                     }
                 ){
+                    NavHost(navController=navController, startDestination = "home") {
+                        composable(route="home"){
+                            HomeScreen()
+                        }
+                        composable(route="profile"){
+                            AttendanceScreen()
+                        }
+                        composable(route="settings") {
+                            SettingsScreen()
+                        }
+                    }
 
                 }
             }

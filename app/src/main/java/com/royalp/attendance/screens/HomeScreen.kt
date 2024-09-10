@@ -12,6 +12,7 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -32,7 +33,13 @@ fun HomeScreen() {
         Column(modifier = Modifier.padding(16.dp,40.dp,16.dp,80.dp).verticalScroll(scrollStateHS)){
             Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween, verticalAlignment = Alignment.CenterVertically){
                 Text(text = "Home", fontFamily = interFontFamily, fontWeight = FontWeight.Bold, fontSize = 30.sp)
-                Icon(imageVector = Icons.Filled.MoreVert, contentDescription = "More", modifier = Modifier.height(42.dp))
+                IconButton(onClick = { /* TODO */ }) {
+                    Icon(
+                        imageVector = Icons.Filled.MoreVert,
+                        contentDescription = "More",
+                        modifier = Modifier.height(42.dp)
+                    )
+                }
             }
             Spacer(modifier = Modifier.height(16.dp))
             Text(text="Good Morning,\nPrathamesh", fontFamily = interFontFamily, fontWeight = FontWeight.Bold, fontSize = 22.sp)
@@ -56,6 +63,7 @@ fun HomeScreen() {
             LectureCard(2)
             Spacer(modifier = Modifier.height(16.dp))
             LectureCard(2)
+            Spacer(modifier = Modifier.height(16.dp))
         }
     }
 }

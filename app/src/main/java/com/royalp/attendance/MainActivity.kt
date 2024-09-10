@@ -25,10 +25,12 @@ import androidx.compose.runtime.setValue
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.royalp.attendance.components.BottomNavigationItem
 import com.royalp.attendance.ui.theme.AttendanceTheme
 import com.royalp.attendance.ui.theme.interFontFamily
 import com.royalp.attendance.screens.HomeScreen
 import com.royalp.attendance.screens.AttendanceScreen
+import com.royalp.attendance.screens.ScoutScreen
 import com.royalp.attendance.screens.SettingsScreen
 
 
@@ -48,7 +50,7 @@ class MainActivity : ComponentActivity() {
                         unSelected = Icons.Outlined.Home,
                     ),
                     BottomNavigationItem(
-                        title = "Profile",
+                        title = "Attendance",
                         selected = Icons.Filled.FrontHand,
                         unSelected = Icons.Outlined.FrontHand,
                     ),
@@ -93,16 +95,29 @@ class MainActivity : ComponentActivity() {
                         composable(route="home"){
                             HomeScreen()
                         }
-                        composable(route="profile"){
-                            AttendanceScreen()
+                        composable(route="attendance"){
+                            AttendanceScreen{
+                                navController.navigate("scout/${it}")
+                            }
                         }
                         composable(route="settings") {
                             SettingsScreen()
                         }
+                        composable(route="scout/{scoutName}", arguments = listOf(
+                            androidx.navigation.navArgument("scoutName"){
+                                type = androidx.navigation.NavType.StringType
+                            }
+                        )) {
+                            val scoutName = it.arguments!!.getString("scoutName")
+                            ScoutScreen(scoutName!!){
+                                navController.navigate("attendance")
+                            }
+                        }
                     }
-
                 }
             }
         }
     }
 }
+
+

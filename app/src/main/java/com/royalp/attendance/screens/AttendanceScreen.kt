@@ -1,5 +1,6 @@
 package com.royalp.attendance.screens
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -28,17 +29,23 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
-import androidx.compose.ui.tooling.preview.Preview
 
-@Preview(showBackground = true)
 @Composable
-fun AttendanceScreen() {
+fun AttendanceScreen(onClick : (scoutName: String)-> Unit) {
     val scrollStateAS = rememberScrollState()
     var excludeMedicalAttendance by remember { mutableStateOf(false) }
-    Column(modifier = Modifier.padding(16.dp,40.dp,16.dp,80.dp).verticalScroll(scrollStateAS)) {
+    Column(modifier = Modifier
+        .padding(16.dp, 40.dp, 16.dp, 80.dp)
+        .verticalScroll(scrollStateAS)) {
         Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween, verticalAlignment = Alignment.CenterVertically){
             Text(text = "Attendance", fontFamily = interFontFamily, fontWeight = FontWeight.Bold, fontSize = 30.sp)
-            Icon(imageVector = Icons.Filled.MoreVert, contentDescription = "More", modifier = Modifier.height(42.dp))
+            IconButton(onClick = { /* TODO */ }) {
+                Icon(
+                    imageVector = Icons.Filled.MoreVert,
+                    contentDescription = "More",
+                    modifier = Modifier.height(42.dp)
+                )
+            }
         }
         Spacer(modifier = Modifier.height(16.dp))
         Text(text="Your current attendance is 75%", fontFamily = interFontFamily, fontWeight = FontWeight.SemiBold, fontSize = 14.sp)
@@ -70,7 +77,10 @@ fun AttendanceScreen() {
                 Icon(Icons.Default.Add, contentDescription = "Add Scout Set", modifier = Modifier.size(24.dp))
             }
         }
-        ScoutSetsSection()
+        Spacer(modifier = Modifier.height(4.dp))
+        ScoutSetItem("Roommates", 16, onClick )
+        ScoutSetItem("Classmates", 74,onClick)
+        ScoutSetItem("CSE Friends", 11,onClick)
     }
 }
 
@@ -90,10 +100,12 @@ fun FilterSection() {
                     fontFamily = interFontFamily,
                     fontWeight = FontWeight.Normal,
                     fontSize = 10.sp,
-                    modifier = Modifier.padding(horizontal = 8.dp)
+                    modifier = Modifier
+                        .padding(horizontal = 8.dp)
                 )
             },
-            shape = RoundedCornerShape(20.dp)
+            shape = RoundedCornerShape(20.dp),
+            modifier = Modifier.height(30.dp)
         )
         FilterChip(
             selected = false,
@@ -107,7 +119,8 @@ fun FilterSection() {
                     modifier = Modifier.padding(horizontal = 8.dp)
                 )
             },
-            shape = RoundedCornerShape(20.dp)
+            shape = RoundedCornerShape(20.dp),
+            modifier = Modifier.height(30.dp)
         )
         FilterChip(
             selected = false,
@@ -121,7 +134,8 @@ fun FilterSection() {
                     modifier = Modifier.padding(horizontal = 8.dp)
                 )
             },
-            shape = RoundedCornerShape(20.dp)
+            shape = RoundedCornerShape(20.dp),
+            modifier = Modifier.height(30.dp)
         )
     }
 }
@@ -173,32 +187,31 @@ fun SubjectAttendanceCard(subject: SubjectAttendance) {
 }
 
 @Composable
-fun ScoutSetsSection() {
-    Column {
-        Spacer(modifier = Modifier.height(8.dp))
-        ScoutSetItem("Roommates", 16)
-        Spacer(modifier = Modifier.height(8.dp))
-        ScoutSetItem("Classmates", 74)
-        Spacer(modifier = Modifier.height(8.dp))
-        ScoutSetItem("CSE Friends", 11)
-        Spacer(modifier = Modifier.height(8.dp))
-    }
-}
-
-@Composable
-fun ScoutSetItem(name: String, count: Int) {
+fun ScoutSetItem(name: String, count: Int,onClick: (scoutName: String) -> Unit) {
     Row(
-        modifier = Modifier.fillMaxWidth(),
-        verticalAlignment = Alignment.CenterVertically
-    ) {
+        modifier = Modifier
+            .fillMaxWidth()
+            .clickable {
+                onClick(name)
+            },
+        verticalAlignment = Alignment.CenterVertically,
+        ) {
         Text(
             text = name,
+            fontFamily = interFontFamily,
+            fontWeight = FontWeight.Normal,
+            fontSize = 14.sp,
             modifier = Modifier.weight(1f)
         )
-        Text(text = count.toString())
+        Text(text = count.toString(),
+            fontFamily = interFontFamily,
+            fontWeight = FontWeight.Normal,
+            fontSize = 14.sp
+        )
         Spacer(modifier = Modifier.width(4.dp))
-        Icon(Icons.Outlined.Person, contentDescription = null)
+        Icon(Icons.Outlined.Person, contentDescription = null, modifier = Modifier.size(20.dp))
     }
+    Spacer(modifier = Modifier.height(12.dp))
 }
 
 data class SubjectAttendance(val name: String, val attendance: Int, val color: Color, val color2: Color)

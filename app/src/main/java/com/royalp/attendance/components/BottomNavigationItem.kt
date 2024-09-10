@@ -1,4 +1,4 @@
-package com.royalp.attendance
+package com.royalp.attendance.components
 
 import androidx.compose.ui.graphics.vector.ImageVector
 

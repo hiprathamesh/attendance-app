@@ -23,6 +23,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ExpandMore
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.FilterChip
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.material3.ripple
@@ -168,13 +169,64 @@ fun LectureCard(
                     }
                     if (expanded) {
                         Spacer(modifier = Modifier.height(8.dp))
-                        Text(
-                            text = extraInfo,
-                            fontFamily = interFontFamily,
-                            fontWeight = FontWeight.Normal,
-                            fontSize = 14.sp,
-                            modifier = Modifier.padding(12.dp, 0.dp)
-                        )
+                        Row(
+                            modifier = Modifier.fillMaxWidth(),
+                            horizontalArrangement = Arrangement.End,
+                            verticalAlignment = Alignment.CenterVertically
+                        ){
+                            FilterChip(
+                                selected = false,
+                                onClick = { /* TODO */ },
+                                label = {
+                                    Text(
+                                        text="Flag",
+                                        fontFamily = interFontFamily,
+                                        fontWeight = FontWeight.Normal,
+                                        fontSize = 10.sp,
+                                        modifier = Modifier
+                                            .padding(horizontal = 2.dp)
+                                    )
+                                },
+                                shape = RoundedCornerShape(20.dp),
+                                border = BorderStroke(0.5.dp, Color.Black),
+                                modifier = Modifier.height(25.dp)
+                            )
+                            Spacer(modifier = Modifier.width(6.dp))
+                            FilterChip(
+                                selected = false,
+                                onClick = { /* TODO */ },
+                                label = {
+                                    Text(
+                                        text="Set Reminder",
+                                        fontFamily = interFontFamily,
+                                        fontWeight = FontWeight.Normal,
+                                        fontSize = 10.sp,
+                                        modifier = Modifier.padding(horizontal = 2.dp)
+                                    )
+                                },
+                                shape = RoundedCornerShape(20.dp),
+                                border = BorderStroke(0.5.dp, Color.Black),
+                                modifier = Modifier.height(25.dp)
+                            )
+                            Spacer(modifier = Modifier.width(6.dp))
+                            FilterChip(
+                                selected = false,
+                                onClick = { /* TODO */ },
+                                label = {
+                                    Text(
+                                        text="View Attendance",
+                                        fontFamily = interFontFamily,
+                                        fontWeight = FontWeight.Normal,
+                                        fontSize = 10.sp,
+                                        modifier = Modifier.padding(horizontal = 2.dp)
+                                    )
+                                },
+                                shape = RoundedCornerShape(20.dp),
+                                modifier = Modifier.height(25.dp),
+                                border = BorderStroke(0.5.dp, Color.Black),
+                            )
+                            Spacer(modifier = Modifier.width(8.dp))
+                        }
                     }
                 }
             }

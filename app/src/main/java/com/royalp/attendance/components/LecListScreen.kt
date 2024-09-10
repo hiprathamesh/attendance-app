@@ -10,7 +10,4 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 @Composable
 fun LecListScreen(viewModel: LecListViewModel = viewModel()) {
 
-    val lecs by viewModel.lecList.collectAsStateWithLifecycle()
-
-
 }

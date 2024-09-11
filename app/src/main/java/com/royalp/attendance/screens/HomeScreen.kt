@@ -85,7 +85,7 @@ fun HomeScreen() {
             Spacer(modifier = Modifier.height(16.dp))
             Row (modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Center){
                 Button(
-                    onClick = { /*TODO*/ },
+                    onClick = { /**/ },
                     colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF6EA8FF))
                 ) {
                     Text(

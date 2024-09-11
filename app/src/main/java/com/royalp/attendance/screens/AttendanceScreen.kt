@@ -153,7 +153,7 @@ fun AttendanceScreen(onClick : (scoutName: String)-> Unit) {
         Spacer(modifier = Modifier.height(16.dp))
         Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween, verticalAlignment = Alignment.CenterVertically){
             Text(text = "Scout Sets", fontFamily = interFontFamily, fontWeight = FontWeight.Bold, fontSize = 30.sp)
-            IconButton(onClick = { /* TODO */ }) {
+            IconButton(onClick = { /**/ }) {
                 Icon(Icons.Default.Add, contentDescription = "Add Scout Set", modifier = Modifier.size(24.dp))
             }
         }

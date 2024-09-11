@@ -142,6 +142,6 @@ fun ScoutCard(name:String="Prathamesh Prashant Nikam",scholar:String="22U02050",
         )
     }
     Spacer(modifier = Modifier.height(12.dp))
-    HorizontalDivider(thickness = 0.75.dp)
+    HorizontalDivider(thickness = 0.75.dp, modifier = Modifier.padding(60.dp,0.dp,0.dp,0.dp))
     Spacer(modifier = Modifier.height(12.dp))
 }

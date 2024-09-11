@@ -21,7 +21,6 @@ import androidx.compose.material.icons.automirrored.outlined.ExitToApp
 import androidx.compose.material.icons.automirrored.outlined.Logout
 import androidx.compose.material.icons.automirrored.outlined.MenuOpen
 import androidx.compose.material.icons.filled.Add
-import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material.icons.outlined.Backup
 import androidx.compose.material.icons.outlined.DarkMode
 import androidx.compose.material.icons.outlined.Dataset
@@ -41,10 +40,13 @@ import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.FilterChip
 import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.scale
@@ -59,6 +61,8 @@ import com.royalp.attendance.R
 import com.royalp.attendance.components.Heatmap
 import com.royalp.attendance.ui.theme.AttendanceTheme
 import com.royalp.attendance.ui.theme.interFontFamily
+import com.royalp.attendance.components.HomeScreenDropdownMenu
+import com.royalp.attendance.components.HomeScreenHeader
 
 @Preview(showBackground = true)
 @Composable
@@ -66,30 +70,34 @@ fun SettingsScreen() {
     AttendanceTheme {
         val scrollStateSS = rememberScrollState()
         val scrollStateFS = rememberScrollState()
+        var expanded by remember { mutableStateOf(false) }
         Column(
             modifier = Modifier
                 .padding(16.dp, 40.dp, 16.dp, 80.dp)
                 .verticalScroll(scrollStateSS)
         ) {
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceBetween,
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                Text(
-                    text = "Profile",
-                    fontFamily = interFontFamily,
-                    fontWeight = FontWeight.Bold,
-                    fontSize = 30.sp
-                )
-                IconButton(onClick = { /* TODO */ }) {
-                    Icon(
-                        imageVector = Icons.Filled.MoreVert,
-                        contentDescription = "More",
-                        modifier = Modifier.height(42.dp)
+            HomeScreenHeader(
+                expanded = expanded,
+                onMoreClick = { expanded = true },
+                dropdownContent = {
+                    HomeScreenDropdownMenu(
+                        expanded = expanded,
+                        onDismiss = { expanded = false },
+                        onMenuItemClick = { item ->
+                            // Handle menu item click
+                            when (item) {
+                                "Edit Profile" -> { /* Handle Edit Profile */ }
+                                "Settings" -> { /* Handle Settings */ }
+                                "Help / Support" -> { /* Handle Help */ }
+                                "Log Out" -> { /* Handle Log Out */ }
+                                "Feedback" -> { /* Handle Feedback */ }
+                                "App Info" -> { /* Handle App Info */ }
+                            }
+                        }
                     )
-                }
-            }
+                },
+                title = "Settings"
+            )
             Spacer(modifier = Modifier.height(16.dp))
             Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.Center){
                 Image(
@@ -114,9 +122,10 @@ fun SettingsScreen() {
                     .horizontalScroll(scrollStateFS),
                 horizontalArrangement = Arrangement.spacedBy(8.dp),
             ) {
+                var selected by remember { mutableStateOf("") }
                 FilterChip(
-                    selected = false,
-                    onClick = { /* TODO */ },
+                    selected = selected == "CSE311",
+                    onClick = { selected = if(selected == "CSE311") "" else "CSE311" },
                     label = {
                         Text(
                             text="CSE311",
@@ -130,8 +139,8 @@ fun SettingsScreen() {
                     modifier = Modifier.height(30.dp)
                 )
                 FilterChip(
-                    selected = false,
-                    onClick = { /* TODO */ },
+                    selected = selected == "CSE312",
+                    onClick = { selected = if(selected == "CSE312") "" else "CSE312" },
                     label = {
                         Text(
                             text="CSE312",
@@ -145,8 +154,8 @@ fun SettingsScreen() {
                     modifier = Modifier.height(30.dp)
                 )
                 FilterChip(
-                    selected = false,
-                    onClick = { /* TODO */ },
+                    selected = selected == "CSE313",
+                    onClick = { selected = if(selected == "CSE313") "" else "CSE313" },
                     label = {
                         Text(
                             text="CSE313",
@@ -160,8 +169,8 @@ fun SettingsScreen() {
                     modifier = Modifier.height(30.dp)
                 )
                 FilterChip(
-                    selected = false,
-                    onClick = { /* TODO */ },
+                    selected = selected == "CSE314",
+                    onClick = { selected = if(selected == "CSE314") "" else "CSE314" },
                     label = {
                         Text(
                             text="CSE314",
@@ -175,8 +184,8 @@ fun SettingsScreen() {
                     modifier = Modifier.height(30.dp)
                 )
                 FilterChip(
-                    selected = false,
-                    onClick = { /* TODO */ },
+                    selected = selected == "CSE315",
+                    onClick = { selected = if(selected == "CSE315") "" else "CSE315" },
                     label = {
                         Text(
                             text="CSE315",
@@ -190,8 +199,8 @@ fun SettingsScreen() {
                     modifier = Modifier.height(30.dp)
                 )
                 FilterChip(
-                    selected = false,
-                    onClick = { /* TODO */ },
+                    selected = selected == "CSE316",
+                    onClick = { selected = if(selected == "CSE316") "" else "CSE316" },
                     label = {
                         Text(
                             text="CSE316",

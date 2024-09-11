@@ -30,6 +30,7 @@ import com.royalp.attendance.ui.theme.AttendanceTheme
 import com.royalp.attendance.ui.theme.interFontFamily
 import com.royalp.attendance.screens.HomeScreen
 import com.royalp.attendance.screens.AttendanceScreen
+import com.royalp.attendance.screens.LecListScreen
 import com.royalp.attendance.screens.ScoutScreen
 import com.royalp.attendance.screens.SettingsScreen
 
@@ -55,7 +56,7 @@ class MainActivity : ComponentActivity() {
                         unSelected = Icons.Outlined.FrontHand,
                     ),
                     BottomNavigationItem(
-                        title = "Settings",
+                        title = "Profile",
                         selected = Icons.Filled.AccountCircle,
                         unSelected = Icons.Outlined.AccountCircle,
                     )
@@ -91,7 +92,7 @@ class MainActivity : ComponentActivity() {
                         }
                     }
                 ){
-                    NavHost(navController=navController, startDestination = "home") {
+                    NavHost(navController=navController, startDestination = "lec-list") {
                         composable(route="home"){
                             HomeScreen()
                         }
@@ -100,8 +101,11 @@ class MainActivity : ComponentActivity() {
                                 navController.navigate("scout/${it}")
                             }
                         }
-                        composable(route="settings") {
+                        composable(route="profile") {
                             SettingsScreen()
+                        }
+                        composable(route="lec-list") {
+                            LecListScreen()
                         }
                         composable(route="scout/{scoutName}", arguments = listOf(
                             androidx.navigation.navArgument("scoutName"){

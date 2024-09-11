@@ -10,7 +10,6 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
-import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -29,30 +28,110 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
+import com.royalp.attendance.components.HomeScreenDropdownMenu
+import com.royalp.attendance.components.HomeScreenHeader
 
 @Composable
 fun AttendanceScreen(onClick : (scoutName: String)-> Unit) {
     val scrollStateAS = rememberScrollState()
     var excludeMedicalAttendance by remember { mutableStateOf(false) }
+    var expanded by remember { mutableStateOf(false) }
+    var started by remember { mutableIntStateOf(0) }
+    var ended by remember { mutableIntStateOf(3) }
     Column(modifier = Modifier
         .padding(16.dp, 40.dp, 16.dp, 80.dp)
         .verticalScroll(scrollStateAS)) {
-        Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween, verticalAlignment = Alignment.CenterVertically){
-            Text(text = "Attendance", fontFamily = interFontFamily, fontWeight = FontWeight.Bold, fontSize = 30.sp)
-            IconButton(onClick = { /* TODO */ }) {
-                Icon(
-                    imageVector = Icons.Filled.MoreVert,
-                    contentDescription = "More",
-                    modifier = Modifier.height(42.dp)
+        HomeScreenHeader(
+            expanded = expanded,
+            onMoreClick = { expanded = true },
+            dropdownContent = {
+                HomeScreenDropdownMenu(
+                    expanded = expanded,
+                    onDismiss = { expanded = false },
+                    onMenuItemClick = { item ->
+                        // Handle menu item click
+                        when (item) {
+                            "Edit Profile" -> { /* Handle Edit Profile */ }
+                            "Settings" -> { /* Handle Settings */ }
+                            "Help / Support" -> { /* Handle Help */ }
+                            "Log Out" -> { /* Handle Log Out */ }
+                            "Feedback" -> { /* Handle Feedback */ }
+                            "App Info" -> { /* Handle App Info */ }
+                        }
+                    }
                 )
-            }
-        }
+            },
+            title = "Attendance"
+        )
         Spacer(modifier = Modifier.height(16.dp))
         Text(text="Your current attendance is 75%", fontFamily = interFontFamily, fontWeight = FontWeight.SemiBold, fontSize = 14.sp)
         Text(text="Attend 67 of the remaining 105 classes to keep your overall attendance over 75%", fontFamily = interFontFamily, fontWeight = FontWeight.Normal, fontSize = 12.sp)
         Spacer(modifier = Modifier.height(16.dp))
         Text(text="FILTERS", fontFamily = interFontFamily, fontWeight = FontWeight.Normal, fontSize = 9.sp)
-        FilterSection()
+        Row(
+            modifier = Modifier.wrapContentWidth(),
+            horizontalArrangement = Arrangement.spacedBy(8.dp)
+        ) {
+            var selected by remember { mutableStateOf("Subject") }
+            FilterChip(
+                selected = selected == "Subject",
+                onClick = {
+                    selected = "Subject"
+                    started = 0
+                    ended = 3
+                          },
+                label = {
+                    Text(
+                        text="Subject",
+                        fontFamily = interFontFamily,
+                        fontWeight = FontWeight.Normal,
+                        fontSize = 10.sp,
+                        modifier = Modifier
+                            .padding(horizontal = 8.dp)
+                    )
+                },
+                shape = RoundedCornerShape(20.dp),
+                modifier = Modifier.height(30.dp)
+            )
+            FilterChip(
+                selected = selected == "Month",
+                onClick = {
+                    selected = "Month"
+                    started=4
+                    ended=6
+                          },
+                label = {
+                    Text(
+                        text="Month",
+                        fontFamily = interFontFamily,
+                        fontWeight = FontWeight.Normal,
+                        fontSize = 10.sp,
+                        modifier = Modifier.padding(horizontal = 8.dp)
+                    )
+                },
+                shape = RoundedCornerShape(20.dp),
+                modifier = Modifier.height(30.dp)
+            )
+            FilterChip(
+                selected = selected == "Semester",
+                onClick = {
+                    selected = "Semester"
+                    started=7
+                    ended=7
+                          },
+                label = {
+                    Text(
+                        text="Semester",
+                        fontFamily = interFontFamily,
+                        fontWeight = FontWeight.Normal,
+                        fontSize = 10.sp,
+                        modifier = Modifier.padding(horizontal = 8.dp)
+                    )
+                },
+                shape = RoundedCornerShape(20.dp),
+                modifier = Modifier.height(30.dp)
+            )
+        }
         Row(
             modifier = Modifier.fillMaxWidth(),
             verticalAlignment = Alignment.CenterVertically
@@ -69,7 +148,8 @@ fun AttendanceScreen(onClick : (scoutName: String)-> Unit) {
             )
         }
         Spacer(modifier = Modifier.height(8.dp))
-        SubjectAttendanceList()
+
+        SubjectAttendanceList(started,ended)
         Spacer(modifier = Modifier.height(16.dp))
         Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween, verticalAlignment = Alignment.CenterVertically){
             Text(text = "Scout Sets", fontFamily = interFontFamily, fontWeight = FontWeight.Bold, fontSize = 30.sp)
@@ -84,72 +164,20 @@ fun AttendanceScreen(onClick : (scoutName: String)-> Unit) {
     }
 }
 
-
 @Composable
-fun FilterSection() {
-    Row(
-        modifier = Modifier.wrapContentWidth(),
-        horizontalArrangement = Arrangement.spacedBy(8.dp)
-    ) {
-        FilterChip(
-            selected = false,
-            onClick = { /* TODO */ },
-            label = {
-                Text(
-                    text="Subject",
-                    fontFamily = interFontFamily,
-                    fontWeight = FontWeight.Normal,
-                    fontSize = 10.sp,
-                    modifier = Modifier
-                        .padding(horizontal = 8.dp)
-                )
-            },
-            shape = RoundedCornerShape(20.dp),
-            modifier = Modifier.height(30.dp)
-        )
-        FilterChip(
-            selected = false,
-            onClick = { /* TODO */ },
-            label = {
-                Text(
-                    text="Month",
-                    fontFamily = interFontFamily,
-                    fontWeight = FontWeight.Normal,
-                    fontSize = 10.sp,
-                    modifier = Modifier.padding(horizontal = 8.dp)
-                )
-            },
-            shape = RoundedCornerShape(20.dp),
-            modifier = Modifier.height(30.dp)
-        )
-        FilterChip(
-            selected = false,
-            onClick = { /* TODO */ },
-            label = {
-                Text(
-                    text="Semester",
-                    fontFamily = interFontFamily,
-                    fontWeight = FontWeight.Normal,
-                    fontSize = 10.sp,
-                    modifier = Modifier.padding(horizontal = 8.dp)
-                )
-            },
-            shape = RoundedCornerShape(20.dp),
-            modifier = Modifier.height(30.dp)
-        )
-    }
-}
-
-@Composable
-fun SubjectAttendanceList() {
+fun SubjectAttendanceList(start:Int, end:Int) {
     val subjects = listOf(
         SubjectAttendance("Engineering\nPhysics", 63, Color(0xFF6EA8FF), Color(0xFFAFD4FF)),
         SubjectAttendance("Engineering\nMathematics II", 22, Color(0xFFFFDC61), Color(0xFFFDFF9D)),
         SubjectAttendance("Engineering\nGraphics", 99, Color(0xFFDCC1FF), Color(0xFFF5E5FF)),
-        SubjectAttendance("Data Structures\n& Algorithms", 72, Color(0xFF77FFA5), Color(0xFFB4FFD6))
+        SubjectAttendance("Data Structures\n& Algorithms", 72, Color(0xFF77FFA5), Color(0xFFB4FFD6)),
+        SubjectAttendance("July", 33, Color(0xFF6EA8FF), Color(0xFFAFD4FF)),
+        SubjectAttendance("August", 100, Color(0xFFFFDC61), Color(0xFFFDFF9D)),
+        SubjectAttendance("September", 58, Color(0xFFDCC1FF), Color(0xFFF5E5FF)),
+        SubjectAttendance("Semester V", 85, Color(0xFFDCC1FF), Color(0xFFF5E5FF))
     )
-    for(x in subjects) {
-        SubjectAttendanceCard(x)
+    for(x in start..end) {
+        SubjectAttendanceCard(subjects[x])
         Spacer(modifier = Modifier.height(8.dp))
     }
 }
